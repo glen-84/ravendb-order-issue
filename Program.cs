@@ -56,6 +56,10 @@ Bar[] _barEntities =
             BarBool = false
         },
     },
+    new()
+    {
+        Foo = null
+    }
 ];
 
 foreach (var bar in _barEntities)
@@ -66,13 +70,13 @@ foreach (var bar in _barEntities)
 session.SaveChanges();
 
 var result = session.Query<Bar>()
-    .OrderByDescending(b => b.Foo.BarBool)
-    .ThenByDescending(b => b.Foo.BarShort)
+    .OrderByDescending(b => b.Foo!.BarBool)
+    .ThenByDescending(b => b.Foo!.BarShort)
     .ToList();
 
 foreach (var bar in result)
 {
-    Console.WriteLine($"Foo.BarBool: {bar.Foo.BarBool}, Foo.BarShort: {bar.Foo.BarShort}");
+    Console.WriteLine($"Foo.BarBool: {bar.Foo?.BarBool}, Foo.BarShort: {bar.Foo?.BarShort}");
 }
 
 await container.StopAsync();
